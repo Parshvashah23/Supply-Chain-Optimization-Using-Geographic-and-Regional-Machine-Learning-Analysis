@@ -25,7 +25,6 @@
 - [🔮 Future Roadmap](#-future-roadmap)
 - [📚 Academic Foundation](#-academic-foundation)
 - [👥 Contributors](#-contributors)
-- [📄 License](#-license)
 - [🙏 Acknowledgments](#-acknowledgments)
 
 ---
