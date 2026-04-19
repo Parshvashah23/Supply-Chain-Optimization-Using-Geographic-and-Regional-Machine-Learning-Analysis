@@ -1,0 +1,14 @@
+# Added by code-review-graph
+.code-review-graph/
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs
+*.log
+
+# Models
+catboost_info/

@@ -1,0 +1,409 @@
+{
+  "training_date": "2026-04-20T00:40:34.020899",
+  "forecast_regions": [
+    "Caribbean",
+    "Central America",
+    "East of USA",
+    "Eastern Asia",
+    "Northern Europe",
+    "Oceania",
+    "South America",
+    "South Asia",
+    "Southeast Asia",
+    "Southern Europe",
+    "US Center",
+    "West Asia",
+    "West of USA",
+    "Western Europe"
+  ],
+  "classifier_regions": [
+    "Caribbean",
+    "Central America",
+    "East of USA",
+    "Eastern Asia",
+    "Eastern Europe",
+    "Northern Europe",
+    "Oceania",
+    "South America",
+    "South Asia",
+    "South of  USA",
+    "Southeast Asia",
+    "Southern Europe",
+    "US Center",
+    "West Africa",
+    "West Asia",
+    "West of USA",
+    "Western Europe"
+  ],
+  "forecast_features": [
+    "Sales_lag_1",
+    "Sales_lag_7",
+    "Sales_lag_14",
+    "Sales_lag_30",
+    "Qty_lag_1",
+    "Qty_lag_7",
+    "Sales_roll_7d",
+    "Sales_roll_30d",
+    "DayOfWeek",
+    "Month",
+    "Quarter",
+    "Is_Weekend",
+    "Is_Month_End",
+    "Late_delivery_risk",
+    "Region_Avg_Late_Delivery_Rate",
+    "Region_Avg_Order_Value",
+    "Geographic_Cluster"
+  ],
+  "classifier_features": [
+    "Days for shipment (scheduled)",
+    "Order Item Total",
+    "Sales",
+    "Order Item Quantity",
+    "Order Item Discount Rate",
+    "Benefit per order",
+    "Shipping_Distance_KM",
+    "Weather_Risk_Score",
+    "Region_Avg_Late_Delivery_Rate",
+    "Region_Avg_Order_Value",
+    "Region_Avg_Shipping_Days",
+    "Order_Month",
+    "Order_DayOfWeek",
+    "Is_Weekend",
+    "Holiday_Flag",
+    "Is_Cross_Border",
+    "KMeans_Cluster",
+    "Shipping Mode_Same Day",
+    "Shipping Mode_Second Class",
+    "Shipping Mode_Standard Class",
+    "Season_Spring",
+    "Season_Summer",
+    "Season_Winter",
+    "Customer Segment_Corporate",
+    "Customer Segment_Home Office",
+    "Macro_Region_Caribbean",
+    "Macro_Region_Central Africa",
+    "Macro_Region_Central America",
+    "Macro_Region_Central Asia",
+    "Macro_Region_East Africa",
+    "Macro_Region_East of USA",
+    "Macro_Region_Eastern Asia",
+    "Macro_Region_Eastern Europe",
+    "Macro_Region_North Africa",
+    "Macro_Region_Northern Europe",
+    "Macro_Region_Oceania",
+    "Macro_Region_South America",
+    "Macro_Region_South Asia",
+    "Macro_Region_South of  USA",
+    "Macro_Region_Southeast Asia",
+    "Macro_Region_Southern Africa",
+    "Macro_Region_Southern Europe",
+    "Macro_Region_US Center",
+    "Macro_Region_West Africa",
+    "Macro_Region_West Asia",
+    "Macro_Region_West of USA",
+    "Macro_Region_Western Europe"
+  ],
+  "global_forecast_metrics": {
+    "MAE": 224.9771471492827,
+    "RMSE": 339.1985038063938,
+    "R2": 0.29868401900045216
+  },
+  "global_classifier_metrics": {},
+  "clustering_metrics": {
+    "kmeans": {
+      "silhouette": 0.16468261286959823,
+      "davies_bouldin": 2.1488886610224474
+    },
+    "dbscan": {
+      "n_clusters": 13,
+      "n_noise": "4750",
+      "best_eps": 0.7
+    },
+    "hierarchical": {
+      "n_clusters": 4
+    }
+  },
+  "regional_forecast_performance": [
+    {
+      "Region": "Caribbean",
+      "MAE": 138.6228404217933,
+      "RMSE": 183.7214193785834,
+      "R2": -0.047473120353782816,
+      "Samples": 110,
+      "Train": 77,
+      "Test": 33
+    },
+    {
+      "Region": "Central America",
+      "MAE": 327.71610089753335,
+      "RMSE": 393.51928354041445,
+      "R2": -0.1448918245649462,
+      "Samples": 248,
+      "Train": 173,
+      "Test": 75
+    },
+    {
+      "Region": "East of USA",
+      "MAE": 218.99706119003568,
+      "RMSE": 272.2807765025386,
+      "R2": -0.2866065236430484,
+      "Samples": 74,
+      "Train": 51,
+      "Test": 23
+    },
+    {
+      "Region": "Eastern Asia",
+      "MAE": 397.4778628661745,
+      "RMSE": 469.5652077202269,
+      "R2": -0.043666383820346155,
+      "Samples": 97,
+      "Train": 67,
+      "Test": 30
+    },
+    {
+      "Region": "Northern Europe",
+      "MAE": 247.48177115876442,
+      "RMSE": 439.9947281828553,
+      "R2": -0.013492971345174354,
+      "Samples": 151,
+      "Train": 105,
+      "Test": 46
+    },
+    {
+      "Region": "Oceania",
+      "MAE": 268.4277332173181,
+      "RMSE": 307.04861320267287,
+      "R2": -0.31357902847780195,
+      "Samples": 104,
+      "Train": 72,
+      "Test": 32
+    },
+    {
+      "Region": "South America",
+      "MAE": 182.619046019076,
+      "RMSE": 242.35449582543154,
+      "R2": 0.3075213260941101,
+      "Samples": 183,
+      "Train": 128,
+      "Test": 55
+    },
+    {
+      "Region": "South Asia",
+      "MAE": 150.77763285429745,
+      "RMSE": 212.1916527678575,
+      "R2": 0.46075216617198345,
+      "Samples": 113,
+      "Train": 79,
+      "Test": 34
+    },
+    {
+      "Region": "Southeast Asia",
+      "MAE": 220.44468781305838,
+      "RMSE": 299.40143681345444,
+      "R2": -0.02946595170951638,
+      "Samples": 112,
+      "Train": 78,
+      "Test": 34
+    },
+    {
+      "Region": "Southern Europe",
+      "MAE": 221.89866735660348,
+      "RMSE": 312.75687046472495,
+      "R2": 0.043833660577644484,
+      "Samples": 133,
+      "Train": 93,
+      "Test": 40
+    },
+    {
+      "Region": "US Center",
+      "MAE": 223.4934847131096,
+      "RMSE": 355.59092934474853,
+      "R2": 0.033580576164907394,
+      "Samples": 60,
+      "Train": 42,
+      "Test": 18
+    },
+    {
+      "Region": "West Asia",
+      "MAE": 170.37685655865747,
+      "RMSE": 234.24558224716475,
+      "R2": -0.1511662222060064,
+      "Samples": 62,
+      "Train": 43,
+      "Test": 19
+    },
+    {
+      "Region": "West of USA",
+      "MAE": 175.43443382333123,
+      "RMSE": 213.13445831314357,
+      "R2": -0.08465848786379282,
+      "Samples": 83,
+      "Train": 58,
+      "Test": 25
+    },
+    {
+      "Region": "Western Europe",
+      "MAE": 353.9430345384619,
+      "RMSE": 532.0533175741608,
+      "R2": 0.21585252014588052,
+      "Samples": 238,
+      "Train": 166,
+      "Test": 72
+    }
+  ],
+  "regional_classifier_performance": [
+    {
+      "Region": "Caribbean",
+      "Precision": 0.6071428571428571,
+      "Recall": 0.7391304347826086,
+      "F1": 0.6666666666666666,
+      "ROC_AUC": 0.6704805491990847,
+      "Samples": 210,
+      "Late_Count": 117
+    },
+    {
+      "Region": "Central America",
+      "Precision": 0.7341772151898734,
+      "Recall": 0.6236559139784946,
+      "F1": 0.6744186046511628,
+      "ROC_AUC": 0.6699873497786212,
+      "Samples": 801,
+      "Late_Count": 462
+    },
+    {
+      "Region": "East of USA",
+      "Precision": 0.7222222222222222,
+      "Recall": 0.65,
+      "F1": 0.6842105263157895,
+      "ROC_AUC": 0.77,
+      "Samples": 198,
+      "Late_Count": 98
+    },
+    {
+      "Region": "Eastern Asia",
+      "Precision": 0.6,
+      "Recall": 0.75,
+      "F1": 0.6666666666666666,
+      "ROC_AUC": 0.6732456140350878,
+      "Samples": 212,
+      "Late_Count": 118
+    },
+    {
+      "Region": "Eastern Europe",
+      "Precision": 0.6428571428571429,
+      "Recall": 0.6923076923076923,
+      "F1": 0.6666666666666666,
+      "ROC_AUC": 0.6442307692307692,
+      "Samples": 103,
+      "Late_Count": 63
+    },
+    {
+      "Region": "Northern Europe",
+      "Precision": 0.65625,
+      "Recall": 0.6774193548387096,
+      "F1": 0.6666666666666666,
+      "ROC_AUC": 0.7052280311457174,
+      "Samples": 298,
+      "Late_Count": 153
+    },
+    {
+      "Region": "Oceania",
+      "Precision": 0.6666666666666666,
+      "Recall": 0.7407407407407407,
+      "F1": 0.7017543859649122,
+      "ROC_AUC": 0.7272727272727273,
+      "Samples": 243,
+      "Late_Count": 136
+    },
+    {
+      "Region": "South America",
+      "Precision": 0.6388888888888888,
+      "Recall": 0.5227272727272727,
+      "F1": 0.575,
+      "ROC_AUC": 0.5849567099567099,
+      "Samples": 428,
+      "Late_Count": 218
+    },
+    {
+      "Region": "South Asia",
+      "Precision": 0.7586206896551724,
+      "Recall": 0.88,
+      "F1": 0.8148148148148148,
+      "ROC_AUC": 0.84,
+      "Samples": 204,
+      "Late_Count": 124
+    },
+    {
+      "Region": "South of  USA",
+      "Precision": 0.5882352941176471,
+      "Recall": 0.6666666666666666,
+      "F1": 0.625,
+      "ROC_AUC": 0.5333333333333334,
+      "Samples": 119,
+      "Late_Count": 74
+    },
+    {
+      "Region": "Southeast Asia",
+      "Precision": 0.8095238095238095,
+      "Recall": 0.6071428571428571,
+      "F1": 0.6938775510204082,
+      "ROC_AUC": 0.7089285714285715,
+      "Samples": 238,
+      "Late_Count": 137
+    },
+    {
+      "Region": "Southern Europe",
+      "Precision": 0.59375,
+      "Recall": 0.6551724137931034,
+      "F1": 0.6229508196721312,
+      "ROC_AUC": 0.6059113300492611,
+      "Samples": 248,
+      "Late_Count": 143
+    },
+    {
+      "Region": "US Center",
+      "Precision": 0.5555555555555556,
+      "Recall": 0.5263157894736842,
+      "F1": 0.5405405405405406,
+      "ROC_AUC": 0.5075187969924813,
+      "Samples": 164,
+      "Late_Count": 92
+    },
+    {
+      "Region": "West Africa",
+      "Precision": 0.6666666666666666,
+      "Recall": 0.5454545454545454,
+      "F1": 0.6,
+      "ROC_AUC": 0.6446280991735538,
+      "Samples": 108,
+      "Late_Count": 55
+    },
+    {
+      "Region": "West Asia",
+      "Precision": 0.8235294117647058,
+      "Recall": 0.7,
+      "F1": 0.7567567567567568,
+      "ROC_AUC": 0.7857142857142857,
+      "Samples": 167,
+      "Late_Count": 98
+    },
+    {
+      "Region": "West of USA",
+      "Precision": 0.6923076923076923,
+      "Recall": 0.75,
+      "F1": 0.72,
+      "ROC_AUC": 0.7757936507936508,
+      "Samples": 224,
+      "Late_Count": 117
+    },
+    {
+      "Region": "Western Europe",
+      "Precision": 0.7448979591836735,
+      "Recall": 0.7934782608695652,
+      "F1": 0.7684210526315789,
+      "ROC_AUC": 0.7913744740532961,
+      "Samples": 769,
+      "Late_Count": 458
+    }
+  ]
+}

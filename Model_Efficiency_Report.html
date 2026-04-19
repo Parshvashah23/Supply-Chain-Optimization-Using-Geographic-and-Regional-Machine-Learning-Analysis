@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ML Pipeline Report - DataCo Supply Chain</title>
+<style>
+  :root { --bg: #f5f7fa; --card-bg: #fff; --accent: #2c6fbb; --text: #222; --muted: #666; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); color: var(--text);
+         line-height: 1.6; padding: 2rem; max-width: 1200px; margin: auto; }
+  h1 { color: var(--accent); border-bottom: 3px solid var(--accent); padding-bottom: .4rem;
+       margin-bottom: 1rem; }
+  h2 { color: var(--accent); margin-top: 2rem; border-left: 4px solid var(--accent);
+       padding-left: .6rem; }
+  h3 { color: #444; margin-top: 1.2rem; }
+  .meta { color: var(--muted); font-size: .9rem; margin-bottom: 1.5rem; }
+  .card { background: var(--card-bg); border-radius: 8px; padding: 1.2rem;
+           margin: .8rem 0; box-shadow: 0 1px 4px rgba(0,0,0,.1); }
+  .card-title { font-weight: 700; font-size: 1.05rem; color: var(--accent);
+                 margin-bottom: .6rem; border-bottom: 1px solid #eee; padding-bottom: .3rem; }
+  table { border-collapse: collapse; width: 100%; margin: .5rem 0; font-size: .92rem; }
+  th, td { text-align: left; padding: .45rem .7rem; border-bottom: 1px solid #e0e0e0; }
+  th { background: #eef3fa; color: #333; }
+  tr:hover { background: #f9fbfe; }
+  .dataframe th { background: #eef3fa; }
+  img { max-width: 100%; height: auto; border-radius: 6px; margin: .5rem 0; }
+  .gallery { display: flex; flex-wrap: wrap; gap: 1rem; }
+  .gallery img { width: 48%; }
+  .verdict { padding: .6rem 1rem; border-radius: 6px; margin: .5rem 0; font-weight: 600; }
+  .pass { background: #d4edda; color: #155724; }
+  .warn { background: #fff3cd; color: #856404; }
+  .fail { background: #f8d7da; color: #721c24; }
+  .missing { color: #999; font-style: italic; }
+  .insight { background: #eef3fa; padding: .4rem .8rem; border-radius: 4px;
+              margin: .3rem 0; }
+  .toc { background: var(--card-bg); padding: 1rem 1.5rem; border-radius: 8px;
+          margin-bottom: 1.5rem; box-shadow: 0 1px 4px rgba(0,0,0,.1); }
+  .toc a { text-decoration: none; color: var(--accent); }
+  .toc a:hover { text-decoration: underline; }
+  .toc li { margin: .2rem 0; }
+</style>
+</head>
+<body>
+
+<h1>ML Pipeline Efficiency Report</h1>
+<p class="meta">
+  <strong>Dataset:</strong> DataCo Supply Chain &nbsp;|&nbsp;
+  <strong>Generated:</strong> 2026-03-06 01:15:39 &nbsp;|&nbsp;
+  <strong>Pipeline Runtime:</strong> 677.3s
+</p>
+
+<div class="toc">
+<strong>Table of Contents</strong>
+<ol>
+<li><a href="#s1">Dataset Overview</a></li>
+<li><a href="#s2">Feature Engineering Summary</a></li>
+<li><a href="#s3">Statistical Tests</a></li>
+<li><a href="#s4">Clustering Results</a></li>
+<li><a href="#s5">Demand Forecasting Performance</a></li>
+<li><a href="#s6">Late Delivery Classifier Performance</a></li>
+<li><a href="#s7">Model Verification &amp; Efficiency</a></li>
+<li><a href="#s8">Sample Predictions</a></li>
+<li><a href="#s9">Business Insights</a></li>
+<li><a href="#s10">Visualizations</a></li>
+<li><a href="#s11">Conclusion &amp; Verdict</a></li>
+</ol>
+</div>
+<h2 id="s1">1. Dataset Overview</h2>
+<div class="card"><div class="card-title">Dataset Statistics</div><div class="card-body">
+<table>
+<tr><td>Total Rows</td><td><strong>180,519</strong></td></tr>
+
+<tr><td>Total Columns</td><td><strong>74</strong></td></tr>
+
+<tr><td>Missing Values</td><td><strong>180519</strong></td></tr>
+
+<tr><td>Regions</td><td><strong>23</strong></td></tr>
+
+<tr><td>Date Range</td><td><strong>2015-01-01 to 2018-01-31</strong></td></tr>
+
+</table>
+<p style="margin-top:.5rem; color:#666;">Regions: Canada, Caribbean, Central Africa, Central America, Central Asia, East Africa, East of USA, Eastern Asia, Eastern Europe, North Africa, Northern Europe, Oceania, South America, South Asia, South of  USA, Southeast Asia, Southern Africa, Southern Europe, US Center, West Africa, West Asia, West of USA, Western Europe</p>
+</div></div>
+<h2 id="s2">2. Feature Engineering Summary</h2>
+<div class="card"><div class="card-title">Engineered Features</div><div class="card-body"><table><tr><th>Category</th><th>Features</th></tr>
+<tr><td>Geographic</td><td>Macro_Region, Shipping_Distance_KM, Is_Cross_Border</td></tr>
+<tr><td>Temporal</td><td>Order_Month, Order_Year, Order_DayOfWeek, Season, Weather_Risk_Score, Holiday_Flag, Is_Weekend</td></tr>
+<tr><td>Regional Agg</td><td>Region_Avg_Late_Delivery_Rate, Region_Avg_Shipping_Days, Region_Std_Shipping_Days, Region_Avg_Order_Value, Region_Total_Sales, Region_Total_Orders, Region_Avg_Discount_Rate</td></tr>
+</table></div></div>
+<h2 id="s3">3. Statistical Tests</h2>
+<div class="card"><div class="card-title">Hypothesis Tests</div><div class="card-body"><table><tr><th>Test</th><th>Statistic</th><th>p-value</th><th>Result</th></tr>
+<tr><td>ANOVA_shipping_days</td><td>1.8286</td><td>0.010171</td><td><span style="color:green">Significant</span></td></tr>
+<tr><td>ChiSquare_late_delivery</td><td>74.9336</td><td>0.000000</td><td><span style="color:green">Significant</span></td></tr>
+<tr><td>KruskalWallis_sales</td><td>331.0831</td><td>0.000000</td><td><span style="color:green">Significant</span></td></tr>
+<tr><td>Correlation_distance_shipping</td><td>-0.0041</td><td>0.080407</td><td>Not Significant</td></tr>
+<tr><td>Ttest_weekend_weekday</td><td>-0.0316</td><td>0.974785</td><td>Not Significant</td></tr>
+</table></div></div>
+<h2 id="s4">4. Clustering Results</h2>
+<div class="card"><div class="card-title">Clustering Metrics</div><div class="card-body"><table><tr><th>Method</th><th>Metric</th><th>Value</th></tr>
+<tr><td>K-Means</td><td>silhouette</td><td>0.1684</td></tr>
+<tr><td>K-Means</td><td>davies_bouldin</td><td>2.1278</td></tr>
+<tr><td>DBSCAN</td><td>n_clusters</td><td>2446</td></tr>
+<tr><td>DBSCAN</td><td>n_noise</td><td>129575</td></tr>
+<tr><td>DBSCAN</td><td>best_eps</td><td>0.3</td></tr>
+<tr><td>Hierarchical</td><td>n_clusters</td><td>4</td></tr>
+</table></div></div>
+<h2 id="s5">5. Demand Forecasting Performance</h2>
+<div class="card"><div class="card-title">Model Comparison</div><div class="card-body"><table><tr><th>Model</th><th>MAE</th><th>RMSE</th><th>R2</th></tr>
+<tr><td>Global XGBoost</td><td>3,152.09</td><td>4,839.18</td><td>0.6535</td></tr>
+<tr><td>Regional Avg</td><td>2,744.79</td><td>3,676.39</td><td>-0.0958</td></tr>
+<tr style="font-weight:700"><td>Ensemble</td><td>2,608.66</td><td>4,403.97</td><td>0.7130</td></tr>
+</table><p><strong>Ensemble improvement over Global: +17.2% MAE reduction</strong></p></div></div>
+<div class="card"><div class="card-title">Regional Forecast Breakdown</div><div class="card-body"><table class="dataframe dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Region</th>
+      <th>MAE</th>
+      <th>RMSE</th>
+      <th>R2</th>
+      <th>Samples</th>
+      <th>Train</th>
+      <th>Test</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Canada</td>
+      <td>705.8939</td>
+      <td>878.5388</td>
+      <td>0.2443</td>
+      <td>74</td>
+      <td>51</td>
+      <td>23</td>
+    </tr>
+    <tr>
+      <td>Caribbean</td>
+      <td>2105.8487</td>
+      <td>2653.5434</td>
+      <td>0.0380</td>
+      <td>257</td>
+      <td>179</td>
+      <td>78</td>
+    </tr>
+    <tr>
+      <td>Central Africa</td>
+      <td>1436.6973</td>
+      <td>1849.0018</td>
+      <td>0.1224</td>
+      <td>93</td>
+      <td>65</td>
+      <td>28</td>
+    </tr>
+    <tr>
+      <td>Central America</td>
+      <td>3398.9824</td>
+      <td>4190.8569</td>
+      <td>-0.0161</td>
+      <td>263</td>
+      <td>184</td>
+      <td>79</td>
+    </tr>
+    <tr>
+      <td>East Africa</td>
+      <td>1237.9996</td>
+      <td>1507.3810</td>
+      <td>0.3461</td>
+      <td>104</td>
+      <td>72</td>
+      <td>32</td>
+    </tr>
+    <tr>
+      <td>East of USA</td>
+      <td>2213.8674</td>
+      <td>2740.7855</td>
+      <td>-0.1968</td>
+      <td>116</td>
+      <td>81</td>
+      <td>35</td>
+    </tr>
+    <tr>
+      <td>Eastern Asia</td>
+      <td>3341.8412</td>
+      <td>4236.3574</td>
+      <td>0.1261</td>
+      <td>213</td>
+      <td>149</td>
+      <td>64</td>
+    </tr>
+    <tr>
+      <td>Eastern Europe</td>
+      <td>2035.9351</td>
+      <td>2569.2545</td>
+      <td>0.0136</td>
+      <td>116</td>
+      <td>81</td>
+      <td>35</td>
+    </tr>
+    <tr>
+      <td>North Africa</td>
+      <td>1964.5033</td>
+      <td>2377.1170</td>
+      <td>-0.1848</td>
+      <td>113</td>
+      <td>79</td>
+      <td>34</td>
+    </tr>
+    <tr>
+      <td>Northern Europe</td>
+      <td>3568.1356</td>
+      <td>5097.2349</td>
+      <td>0.1452</td>
+      <td>290</td>
+      <td>203</td>
+      <td>87</td>
+    </tr>
+    <tr>
+      <td>Oceania</td>
+      <td>4970.7311</td>
+      <td>5676.3371</td>
+      <td>-3.4279</td>
+      <td>213</td>
+      <td>149</td>
+      <td>64</td>
+    </tr>
+    <tr>
+      <td>South America</td>
+      <td>3493.2102</td>
+      <td>4931.3319</td>
+      <td>0.3631</td>
+      <td>272</td>
+      <td>190</td>
+      <td>82</td>
+    </tr>
+    <tr>
+      <td>South Asia</td>
+      <td>1676.5921</td>
+      <td>2126.1225</td>
+      <td>0.3603</td>
+      <td>325</td>
+      <td>227</td>
+      <td>98</td>
+    </tr>
+    <tr>
+      <td>South of  USA</td>
+      <td>2315.3087</td>
+      <td>2951.0037</td>
+      <td>-0.0898</td>
+      <td>116</td>
+      <td>81</td>
+      <td>35</td>
+    </tr>
+    <tr>
+      <td>Southeast Asia</td>
+      <td>3504.9296</td>
+      <td>5227.6193</td>
+      <td>0.2307</td>
+      <td>199</td>
+      <td>139</td>
+      <td>60</td>
+    </tr>
+    <tr>
+      <td>Southern Africa</td>
+      <td>1134.0478</td>
+      <td>1711.5212</td>
+      <td>0.2142</td>
+      <td>84</td>
+      <td>58</td>
+      <td>26</td>
+    </tr>
+    <tr>
+      <td>Southern Europe</td>
+      <td>3160.0424</td>
+      <td>4505.2152</td>
+      <td>0.0920</td>
+      <td>299</td>
+      <td>209</td>
+      <td>90</td>
+    </tr>
+    <tr>
+      <td>US Center</td>
+      <td>1868.0509</td>
+      <td>2594.8876</td>
+      <td>0.1758</td>
+      <td>116</td>
+      <td>81</td>
+      <td>35</td>
+    </tr>
+    <tr>
+      <td>West Africa</td>
+      <td>2790.9757</td>
+      <td>3313.7189</td>
+      <td>-0.2795</td>
+      <td>115</td>
+      <td>80</td>
+      <td>35</td>
+    </tr>
+    <tr>
+      <td>West Asia</td>
+      <td>3501.3725</td>
+      <td>4497.7755</td>
+      <td>-0.3296</td>
+      <td>117</td>
+      <td>81</td>
+      <td>36</td>
+    </tr>
+    <tr>
+      <td>West of USA</td>
+      <td>3483.0837</td>
+      <td>4073.0291</td>
+      <td>-0.1893</td>
+      <td>117</td>
+      <td>81</td>
+      <td>36</td>
+    </tr>
+    <tr>
+      <td>Western Europe</td>
+      <td>6477.4082</td>
+      <td>11171.8778</td>
+      <td>0.1343</td>
+      <td>295</td>
+      <td>206</td>
+      <td>89</td>
+    </tr>
+  </tbody>
+</table></div></div>
+<h2 id="s6">6. Late Delivery Classifier Performance</h2>
+<div class="card"><div class="card-title">Classifier Comparison</div><div class="card-body"><table><tr><th>Metric</th><th>Global</th><th>Regional Avg</th></tr>
+<tr><td>F1 Score</td><td>0.6802</td><td>0.7099</td></tr>
+<tr><td>ROC-AUC</td><td>0.7587</td><td>0.8022</td></tr>
+</table></div></div>
+<div class="card"><div class="card-title">Regional Classifier Breakdown</div><div class="card-body"><table class="dataframe dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Region</th>
+      <th>Precision</th>
+      <th>Recall</th>
+      <th>F1</th>
+      <th>ROC_AUC</th>
+      <th>Samples</th>
+      <th>Late_Count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Canada</td>
+      <td>0.8750</td>
+      <td>0.7447</td>
+      <td>0.8046</td>
+      <td>0.9110</td>
+      <td>959</td>
+      <td>468</td>
+    </tr>
+    <tr>
+      <td>Caribbean</td>
+      <td>0.7997</td>
+      <td>0.5923</td>
+      <td>0.6805</td>
+      <td>0.7801</td>
+      <td>8318</td>
+      <td>4415</td>
+    </tr>
+    <tr>
+      <td>Central Africa</td>
+      <td>0.8608</td>
+      <td>0.6974</td>
+      <td>0.7705</td>
+      <td>0.8481</td>
+      <td>1677</td>
+      <td>972</td>
+    </tr>
+    <tr>
+      <td>Central America</td>
+      <td>0.8183</td>
+      <td>0.5715</td>
+      <td>0.6730</td>
+      <td>0.7571</td>
+      <td>28341</td>
+      <td>15518</td>
+    </tr>
+    <tr>
+      <td>Central Asia</td>
+      <td>0.9123</td>
+      <td>0.8525</td>
+      <td>0.8814</td>
+      <td>0.9167</td>
+      <td>553</td>
+      <td>306</td>
+    </tr>
+    <tr>
+      <td>East Africa</td>
+      <td>0.7747</td>
+      <td>0.6779</td>
+      <td>0.7231</td>
+      <td>0.8029</td>
+      <td>1852</td>
+      <td>1036</td>
+    </tr>
+    <tr>
+      <td>East of USA</td>
+      <td>0.8011</td>
+      <td>0.5805</td>
+      <td>0.6732</td>
+      <td>0.7692</td>
+      <td>6915</td>
+      <td>3849</td>
+    </tr>
+    <tr>
+      <td>Eastern Asia</td>
+      <td>0.8287</td>
+      <td>0.5992</td>
+      <td>0.6955</td>
+      <td>0.7769</td>
+      <td>7280</td>
+      <td>3955</td>
+    </tr>
+    <tr>
+      <td>Eastern Europe</td>
+      <td>0.8045</td>
+      <td>0.6606</td>
+      <td>0.7254</td>
+      <td>0.8150</td>
+      <td>3920</td>
+      <td>2182</td>
+    </tr>
+    <tr>
+      <td>North Africa</td>
+      <td>0.8193</td>
+      <td>0.5779</td>
+      <td>0.6777</td>
+      <td>0.8199</td>
+      <td>3232</td>
+      <td>1762</td>
+    </tr>
+    <tr>
+      <td>Northern Europe</td>
+      <td>0.8114</td>
+      <td>0.5647</td>
+      <td>0.6659</td>
+      <td>0.7545</td>
+      <td>9792</td>
+      <td>5292</td>
+    </tr>
+    <tr>
+      <td>Oceania</td>
+      <td>0.8063</td>
+      <td>0.5579</td>
+      <td>0.6595</td>
+      <td>0.7448</td>
+      <td>10148</td>
+      <td>5482</td>
+    </tr>
+    <tr>
+      <td>South America</td>
+      <td>0.8147</td>
+      <td>0.5666</td>
+      <td>0.6684</td>
+      <td>0.7620</td>
+      <td>14935</td>
+      <td>8111</td>
+    </tr>
+    <tr>
+      <td>South Asia</td>
+      <td>0.8178</td>
+      <td>0.6138</td>
+      <td>0.7012</td>
+      <td>0.7856</td>
+      <td>7731</td>
+      <td>4350</td>
+    </tr>
+    <tr>
+      <td>South of  USA</td>
+      <td>0.8807</td>
+      <td>0.6386</td>
+      <td>0.7404</td>
+      <td>0.8520</td>
+      <td>4045</td>
+      <td>2256</td>
+    </tr>
+    <tr>
+      <td>Southeast Asia</td>
+      <td>0.8226</td>
+      <td>0.5774</td>
+      <td>0.6785</td>
+      <td>0.7796</td>
+      <td>9539</td>
+      <td>5297</td>
+    </tr>
+    <tr>
+      <td>Southern Africa</td>
+      <td>0.8600</td>
+      <td>0.6935</td>
+      <td>0.7679</td>
+      <td>0.8648</td>
+      <td>1157</td>
+      <td>617</td>
+    </tr>
+    <tr>
+      <td>Southern Europe</td>
+      <td>0.8052</td>
+      <td>0.6082</td>
+      <td>0.6929</td>
+      <td>0.7703</td>
+      <td>9431</td>
+      <td>5129</td>
+    </tr>
+    <tr>
+      <td>US Center</td>
+      <td>0.8396</td>
+      <td>0.6190</td>
+      <td>0.7126</td>
+      <td>0.8235</td>
+      <td>5887</td>
+      <td>3252</td>
+    </tr>
+    <tr>
+      <td>West Africa</td>
+      <td>0.8379</td>
+      <td>0.5422</td>
+      <td>0.6584</td>
+      <td>0.7879</td>
+      <td>3696</td>
+      <td>1953</td>
+    </tr>
+    <tr>
+      <td>West Asia</td>
+      <td>0.8099</td>
+      <td>0.5895</td>
+      <td>0.6823</td>
+      <td>0.7835</td>
+      <td>6009</td>
+      <td>3322</td>
+    </tr>
+    <tr>
+      <td>West of USA</td>
+      <td>0.8286</td>
+      <td>0.6107</td>
+      <td>0.7031</td>
+      <td>0.7825</td>
+      <td>7993</td>
+      <td>4313</td>
+    </tr>
+    <tr>
+      <td>Western Europe</td>
+      <td>0.8080</td>
+      <td>0.6030</td>
+      <td>0.6906</td>
+      <td>0.7630</td>
+      <td>27109</td>
+      <td>15140</td>
+    </tr>
+  </tbody>
+</table></div></div>
+<h2 id="s7">7. Model Verification &amp; Efficiency</h2>
+<div class="card"><div class="card-title">Demand Forecast - 5-Fold Time-Series CV</div><div class="card-body"><table class="dataframe dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Fold</th>
+      <th>MAE</th>
+      <th>RMSE</th>
+      <th>R2</th>
+      <th>MAPE%</th>
+      <th>Train_n</th>
+      <th>Test_n</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>2964.4546</td>
+      <td>4050.4967</td>
+      <td>0.4285</td>
+      <td>46.0784</td>
+      <td>660</td>
+      <td>658</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>2403.9875</td>
+      <td>3009.6559</td>
+      <td>0.4752</td>
+      <td>162.8690</td>
+      <td>1318</td>
+      <td>658</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>1445.7590</td>
+      <td>2016.7943</td>
+      <td>0.5685</td>
+      <td>92.6719</td>
+      <td>1976</td>
+      <td>658</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>2736.3740</td>
+      <td>3934.0406</td>
+      <td>0.7225</td>
+      <td>46.4050</td>
+      <td>2634</td>
+      <td>658</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>3400.4055</td>
+      <td>5580.9675</td>
+      <td>0.5566</td>
+      <td>202.1233</td>
+      <td>3292</td>
+      <td>658</td>
+    </tr>
+  </tbody>
+</table><p><strong>CV Mean MAE:</strong> 2,590.2 &plusmn; 735.2 &nbsp;|&nbsp;
+                     <strong>CV Mean R2:</strong> 0.5503 &plusmn; 0.1124</p></div></div>
+<div class="card"><div class="card-title">Late Delivery Classifier - 5-Fold Stratified CV</div><div class="card-body"><table class="dataframe dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Fold</th>
+      <th>F1</th>
+      <th>ROC_AUC</th>
+      <th>Avg_Precision</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>0.6738</td>
+      <td>0.7417</td>
+      <td>0.8080</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>0.6767</td>
+      <td>0.7453</td>
+      <td>0.8103</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>0.6742</td>
+      <td>0.7416</td>
+      <td>0.8083</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>0.6775</td>
+      <td>0.7464</td>
+      <td>0.8115</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>0.6810</td>
+      <td>0.7488</td>
+      <td>0.8132</td>
+    </tr>
+  </tbody>
+</table><p><strong>CV Mean F1:</strong> 0.6766 &plusmn; 0.0029 &nbsp;|&nbsp;
+                       <strong>CV Mean AUC:</strong> 0.7448 &plusmn; 0.0031</p></div></div>
+<div class="card"><div class="card-title">Overfitting Check - Demand Forecasting</div><div class="card-body"><table><tr><th>Metric</th><th>Train</th><th>Test</th><th>Gap</th><th>Verdict</th></tr>
+<tr><td>MAE</td><td>1123.4175</td><td>3164.4709</td><td>-2041.0533</td><td class="warn">OVERFIT</td></tr>
+<tr><td>R2</td><td>0.9372</td><td>0.6487</td><td>+0.2885</td><td class="warn">OVERFIT</td></tr>
+<tr><td>MAPE</td><td>37.8992</td><td>129.0541</td><td>-91.1549</td><td class="warn">OVERFIT</td></tr>
+</table></div></div>
+<div class="card"><div class="card-title">Overfitting Check - Late Delivery Classifier</div><div class="card-body"><table><tr><th>Metric</th><th>Train</th><th>Test</th><th>Gap</th><th>Verdict</th></tr>
+<tr><td>F1</td><td>0.6917</td><td>0.6802</td><td>+0.0114</td><td class="pass">OK</td></tr>
+<tr><td>AUC</td><td>0.8035</td><td>0.7587</td><td>+0.0448</td><td class="pass">OK</td></tr>
+</table></div></div>
+<h3>Verification Plots</h3>
+<div class="gallery">
+<img src="plots/verification/cv1_forecast_folds.png" alt="cv1_forecast_folds.png">
+<img src="plots/verification/cv2_classifier_folds.png" alt="cv2_classifier_folds.png">
+<img src="plots/verification/cv3_residual_analysis.png" alt="cv3_residual_analysis.png">
+<img src="plots/verification/cv4_precision_recall_curve.png" alt="cv4_precision_recall_curve.png">
+<img src="plots/verification/cv5_calibration_curve.png" alt="cv5_calibration_curve.png">
+<img src="plots/verification/cv6_learning_curve.png" alt="cv6_learning_curve.png">
+<img src="plots/verification/cv7_permutation_importance.png" alt="cv7_permutation_importance.png">
+<img src="plots/verification/cv8_regional_stability_classifier.png" alt="cv8_regional_stability_classifier.png">
+<img src="plots/verification/cv8_regional_stability_forecast.png" alt="cv8_regional_stability_forecast.png">
+</div>
+<h2 id="s8">8. Sample Predictions (Demo Input)</h2>
+<div class="card"><div class="card-title">Regional Demand Predictions</div><div class="card-body"><table><tr><th>Region</th><th>Predicted Daily Demand ($)</th></tr>
+<tr><td>Canada</td><td>$2,045.42</td></tr>
+<tr><td>Caribbean</td><td>$4,058.12</td></tr>
+<tr><td>Central Africa</td><td>$3,244.28</td></tr>
+<tr><td>Central America</td><td>$12,900.53</td></tr>
+<tr><td>East Africa</td><td>$3,206.59</td></tr>
+<tr><td>East of USA</td><td>$9,093.70</td></tr>
+<tr><td>Eastern Asia</td><td>$5,944.30</td></tr>
+<tr><td>Eastern Europe</td><td>$4,391.72</td></tr>
+<tr><td>North Africa</td><td>$3,686.54</td></tr>
+<tr><td>Northern Europe</td><td>$5,177.88</td></tr>
+<tr><td>Oceania</td><td>$8,050.52</td></tr>
+<tr><td>South America</td><td>$6,724.29</td></tr>
+<tr><td>South Asia</td><td>$3,172.99</td></tr>
+<tr><td>South of  USA</td><td>$4,025.03</td></tr>
+<tr><td>Southeast Asia</td><td>$4,487.19</td></tr>
+<tr><td>Southern Africa</td><td>$2,294.15</td></tr>
+<tr><td>Southern Europe</td><td>$5,377.08</td></tr>
+<tr><td>US Center</td><td>$5,424.39</td></tr>
+<tr><td>West Africa</td><td>$3,893.62</td></tr>
+<tr><td>West Asia</td><td>$5,335.27</td></tr>
+<tr><td>West of USA</td><td>$10,090.13</td></tr>
+<tr><td>Western Europe</td><td>$10,826.13</td></tr>
+</table></div></div>
+<h2 id="s9">9. Business Insights</h2>
+<div class="card"><div class="card-title">Automated Insights</div><div class="card-body"><div class="insight"><strong>1.</strong> HIGH-RISK REGIONS (>50% late delivery): Central Africa (58%), South Asia (56%), East Africa (56%), Western Europe (56%), South of  USA (56%), Eastern Europe (56%), East of USA (56%), Southeast Asia (56%), Central Asia (55%), West Asia (55%), US Center (55%), Central America (55%), North Africa (55%), Southern Europe (54%), Eastern Asia (54%), South America (54%), Northern Europe (54%), Oceania (54%), West of USA (54%), Southern Africa (53%), Caribbean (53%), West Africa (53%)</div>
+<div class="insight"><strong>2.</strong> TOP 3 REGIONS by revenue (Western Europe, Central America, South America): 39.5% of total sales</div>
+<div class="insight"><strong>3.</strong> DEMAND FORECASTING: Global MAE=3152.09, R2=0.6535</div>
+<div class="insight"><strong>4.</strong> REGIONAL MODELS improve forecast MAE by +12.9% vs global</div>
+<div class="insight"><strong>5.</strong> LATE DELIVERY CLASSIFIER: F1=0.6802, ROC-AUC=0.7587</div>
+<div class="insight"><strong>6.</strong> GEOGRAPHIC CLUSTERING: K-Means Silhouette Score = 0.1684</div>
+<div class="insight"><strong>7.</strong> FASTEST SHIPPING: Canada (3.3 days avg)</div>
+<div class="insight"><strong>8.</strong> SLOWEST SHIPPING: Central Africa (3.6 days avg)</div>
+</div></div>
+<h2 id="s10">10. Visualizations</h2>
+<h3>EDA &amp; Model Plots</h3>
+<div class="gallery">
+<img src="plots/01_late_delivery_by_region.png" alt="01_late_delivery_by_region.png">
+<img src="plots/02_sales_by_region.png" alt="02_sales_by_region.png">
+<img src="plots/03_shipping_days_boxplot.png" alt="03_shipping_days_boxplot.png">
+<img src="plots/04_seasonal_demand.png" alt="04_seasonal_demand.png">
+<img src="plots/05_correlation_matrix.png" alt="05_correlation_matrix.png">
+<img src="plots/06_delivery_status_by_region.png" alt="06_delivery_status_by_region.png">
+<img src="plots/07_customer_segment_by_region.png" alt="07_customer_segment_by_region.png">
+<img src="plots/08_kmeans_elbow_silhouette.png" alt="08_kmeans_elbow_silhouette.png">
+<img src="plots/09_hierarchical_dendrogram.png" alt="09_hierarchical_dendrogram.png">
+<img src="plots/10_cluster_scatter_kmeans_cluster.png" alt="10_cluster_scatter_kmeans_cluster.png">
+<img src="plots/11_feature_importance_global_model.png" alt="11_feature_importance_global_model.png">
+<img src="plots/12_model_comparison.png" alt="12_model_comparison.png">
+<img src="plots/13_confusion_matrix_global_classifier.png" alt="13_confusion_matrix_global_classifier.png">
+<img src="plots/14_roc_curve_global_classifier.png" alt="14_roc_curve_global_classifier.png">
+<img src="plots/15_classifier_feature_importance.png" alt="15_classifier_feature_importance.png">
+<img src="plots/16_regional_classifier_comparison.png" alt="16_regional_classifier_comparison.png">
+</div>
+<h2 id="s11">11. Conclusion &amp; Overall Verdict</h2>
+<div class="card"><div class="card-title">Overall Model Efficiency Verdict</div><div class="card-body"><table><tr><th>Component</th><th>Verdict</th><th>Key Metric</th></tr>
+<tr><td>Demand Forecasting</td><td class="verdict warn">MODERATE</td><td>R2=0.7130</td></tr>
+<tr><td>Late Delivery Classifier</td><td class="verdict fail">NEEDS IMPROVEMENT</td><td>F1=0.6802</td></tr>
+<tr><td>Forecast CV Stability</td><td class="verdict warn">VARIABLE</td><td>R2 std=0.1124</td></tr>
+</table></div></div>
+
+<p class="meta" style="margin-top: 2rem;">
+  Report generated on 2026-03-06 01:15:39 | Pipeline runtime: 677.3s |
+  180,519 rows processed | 25 plots generated
+</p>
+</body></html>
