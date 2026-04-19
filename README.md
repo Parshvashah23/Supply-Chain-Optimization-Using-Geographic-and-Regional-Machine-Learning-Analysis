@@ -3,7 +3,6 @@
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/downloads/)
 [![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange.svg)](https://www.tensorflow.org/)
 [![XGBoost](https://img.shields.io/badge/XGBoost-Latest-green.svg)](https://xgboost.readthedocs.io/)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 > **A state-of-the-art End-to-End MLOps Pipeline for intelligent supply chain optimization leveraging geographic analysis, causal inference, and multi-risk prediction engines**
@@ -1075,19 +1074,6 @@ Found a bug? Please open an issue on our [GitHub Issues](https://github.com/your
 
 ---
 
-## 📄 License
-
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
-**Summary**:
-- ✅ Commercial use allowed
-- ✅ Modification allowed
-- ✅ Distribution allowed
-- ✅ Private use allowed
-- ⚠️ Liability limitations apply
-- ⚠️ Warranty disclaimer applies
-
----
 
 ## 🙏 Acknowledgments
 
