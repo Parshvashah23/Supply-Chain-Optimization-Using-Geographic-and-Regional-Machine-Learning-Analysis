@@ -1163,12 +1163,6 @@ Found a bug? Please open an issue on our [GitHub Issues](https://github.com/your
 
 ---
 
-## 🌟 Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=yourusername/supply-chain-optimization&type=Date)](https://star-history.com/#yourusername/supply-chain-optimization&Date)
-
----
-
 ## 📊 Project Status
 
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
