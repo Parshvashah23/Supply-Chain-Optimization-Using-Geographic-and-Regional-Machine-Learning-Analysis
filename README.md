@@ -3,6 +3,7 @@
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/downloads/)
 [![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange.svg)](https://www.tensorflow.org/)
 [![XGBoost](https://img.shields.io/badge/XGBoost-Latest-green.svg)](https://xgboost.readthedocs.io/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 > **A state-of-the-art End-to-End MLOps Pipeline for intelligent supply chain optimization leveraging geographic analysis, causal inference, and multi-risk prediction engines**
@@ -25,6 +26,7 @@
 - [🔮 Future Roadmap](#-future-roadmap)
 - [📚 Academic Foundation](#-academic-foundation)
 - [👥 Contributors](#-contributors)
+- [📄 License](#-license)
 - [🙏 Acknowledgments](#-acknowledgments)
 
 ---
@@ -33,13 +35,13 @@
 
 This project implements a **revolutionary End-to-End Machine Learning Operations (MLOps) Pipeline** that transforms supply chain analytics from reactive reporting into proactive, causally-grounded decision intelligence. Operating on the **DataCo Smart Supply Chain Dataset** (180,000+ orders), our system autonomously executes a 7-phase analytical process that integrates:
 
-- **Geographic Intelligence**: 6 distinct regional clusters with unique logistics profiles
-- **Advanced Forecasting**: XGBoost + LSTM hybrid models achieving **4.5% MAE improvement** over global baselines
+- **Geographic Intelligence**: 3 K-Means clusters + 4 hierarchical clusters across 23 macro-regions with unique logistics profiles
+- **Advanced Forecasting**: XGBoost + LSTM hybrid models achieving **16.85% MAE improvement** (Ensemble) and **12.74% MAE improvement** (Regional) over global baselines
 - **Explainable AI**: SHAP & LIME providing mathematical deconstruction of "black box" predictions
 - **Multi-Risk Architecture**: Composite 0-100 risk scoring across fraud, cancellation, and delivery failures
-- **Causal Reasoning**: DoWhy-based policy impact quantification (e.g., **33.4% late delivery reduction** from First Class shipping)
-- **Financial Optimization**: Cost-sensitive thresholds reducing expected loss by **18.3%**
-- **Dynamic Resilience**: Real-time drift detection and cluster stress testing
+- **Causal Reasoning**: DoWhy-based policy impact quantification (e.g., **~34.6 percentage point late delivery reduction** from First Class shipping, ATE = −0.3463)
+- **Financial Optimization**: Cost-sensitive threshold optimization (optimal threshold: 0.10) with ESG-adjusted profitability analysis
+- **Dynamic Resilience**: Real-time drift detection across 23 regions — 16 drifting, 7 worsening late-rate trends
 
 ### 🎯 What Makes This Different?
 
@@ -86,16 +88,19 @@ Modern supply chains face four critical failure modes that cost billions annuall
 ## ✨ Key Features & Innovations
 
 ### 🗺️ Geographic Intelligence Engine
-- **26 spatial & temporal-geographic features** engineered from raw data
-- **K-Means clustering** identifies 6 cohesive demand regions (silhouette score: 0.61)
-- **Moran's I spatial autocorrelation** (I = 0.42, p < 0.01) statistically validates geographic clustering
+- **74 features** engineered from raw 53-column dataset (21 new geographic + temporal features)
+- **K-Means clustering** identifies 3 optimal demand regions (silhouette score: 0.1682, Davies-Bouldin: 2.1272)
+- **Hierarchical clustering** groups 23 macro-regions into 4 clusters (Africa/Asia/Oceania, Americas/Europe/Asia mix, Europe, Canada)
+- **DBSCAN clustering** evaluated across multiple eps values; best silhouette: 0.7726 at eps=0.3
+- **Moran's I spatial autocorrelation** statistically validates geographic clustering
 - **Regional SHAP heatmaps** revealing how feature importance shifts by geography (novel contribution)
 
 ### 🤖 Advanced ML Architecture
-- **XGBoost regional forecasters** achieving **4.5% average MAE improvement** over global baseline
-- **LSTM deep learning** capturing multi-seasonal trends and volatility clustering
-- **Hybrid ensemble** combining LSTM temporal representations with XGBoost tabular features
-- **Regional Random Forest classifiers** with AUC scores ranging from 0.87 to 0.91
+- **XGBoost global demand forecaster**: MAE = 2177.32, RMSE = 3381.78, R² = 0.6310
+- **Regional XGBoost forecasters** (22 models): Average MAE = 1899.90 — **+12.74% improvement** over global baseline
+- **Ensemble model**: MAE = 1810.37, RMSE = 3067.76, R² = 0.6963 — **+16.85% improvement** over global baseline
+- **LSTM deep learning** (35,756 parameters): Best val_loss = 0.0051, val_MAE = 0.0578 after 5 epochs
+- **Regional Random Forest classifiers** (23 regions): Average F1 = 0.7023, Average AUC = 0.7883
 
 ### 🔍 Explainable AI (XAI) Layer
 - **SHAP global beeswarm plots** for aggregate feature importance
@@ -105,30 +110,34 @@ Modern supply chains face four critical failure modes that cost billions annuall
 - **Interactive HTML dashboard** (`XAI_Report.html`) for executive presentation
 
 ### 🚨 Multi-Risk Prediction Engine
-- **Fraud Detection**: XGBoost classifier identifying anomalous transaction patterns
-- **Cancellation Prediction**: Pre-dispatch flight risk estimation
-- **Late Delivery Prediction**: Regional RandomForest classifiers
+- **Fraud Detection**: XGBoost classifier; 5-Fold CV AUC = 0.5335 ± 0.0060; dataset fraud rate = 2.22% (120,000 orders)
+- **Cancellation Prediction**: Pre-dispatch risk estimation; ROC-AUC = 0.5050
+- **Late Delivery Prediction**: 23 regional RandomForest classifiers; Global F1 = 0.6697, AUC = 0.7461; Best: Canada (F1 = 0.8000, AUC = 0.8956); Worst: Oceania (F1 = 0.6563)
 - **Composite Risk Index**: 0-100 executive threat score aggregating all risk dimensions
-- **Automatic circuit breakers**: Orders scoring >70 flagged for manual review
+- **Regional risk tiers**: Low / Medium / High / Critical classified across all 23 regions
 
 ### 🧬 Causal Inference Engine
 - **DoWhy Directed Acyclic Graphs (DAGs)** encoding causal structure
 - **Propensity Score Matching** controlling for confounders
-- **Average Treatment Effect (ATE) estimation** with confidence intervals
-- **Robustness testing**: Placebo treatment and data subset refutation
-- **Policy scenarios**: Quantifying impact of shipping upgrades, discount strategies, etc.
+- **Average Treatment Effect (ATE) estimation**: Backdoor PSM ATE = −0.3463; Linear regression ATE = −0.3464 (consistent)
+- **Shipping upgrade impact**: First Class vs. Standard reduces late delivery probability by **~34.6 percentage points**
+- **Fraud causal analysis**: High-discount → Fraud ATE = −0.0169 (minimal effect)
 
 ### 💰 Financial & ESG Optimization
-- **Cost-sensitive classification** reducing expected loss by **18.3%**
+- **Cost-sensitive classification**: FN cost = $43.41/order; FP cost = $5.00/order; Optimal threshold = 0.10
 - **Pareto frontier analysis**: Identifying optimal profitability vs. speed trade-offs
-- **ESG sustainability scoring**: Carbon footprint proxies and social governance metrics
-- **ROI quantification**: Translating ML predictions into dollar-denominated business value
+- **ESG sustainability scoring by market**:
+  - USCA: Total profit $376K, ESG cost $881K, avg carbon 1,024 km/order
+  - Africa: Total profit $158K, ESG cost $676K, avg carbon 1,754 km/order (highest)
+  - Europe: Total profit $772K, ESG cost $1.71M, best profit-per-carbon ratio (0.051)
+  - Pacific Asia: Total profit $563K, ESG cost $1.73M
+  - LATAM: Total profit $739K, ESG cost $2.33M (highest ESG cost)
 
 ### 🛡️ Dynamic Resilience Monitoring
-- **Cluster stress testing**: Can regions handle 30% demand surges?
-- **Concept drift detection**: Statistical tests across quarterly partitions
-- **Automatic retraining alerts**: Triggered when distributions shift significantly
-- **Resilience radar charts**: Visualizing cluster fragility
+- **Cluster stress testing**: Resilience indices — Cluster 1 (LATAM): 0.7505 (Stable), Cluster 2 (LATAM): 0.4627 (Vulnerable), Cluster 0 (Central/Europe): 0.2791 (Fragile)
+- **Concept drift detection**: 16 of 23 regions showing cluster instability; 7 regions with worsening late-rate trends
+- **Automatic retraining alerts**: Triggered for all high-drift regions (Canada, Central Asia, East Africa, Oceania, and 12 more)
+- **Resilience radar charts**: Visualizing cluster fragility per region
 
 ---
 
@@ -137,25 +146,25 @@ Modern supply chains face four critical failure modes that cost billions annuall
 This work advances the academic state-of-the-art with **seven novel contributions**:
 
 ### 1️⃣ Geographic Specialization Validation
-**First empirical validation** that region-specific models outperform global baselines on supply chain data, with quantified **4.5% MAE improvement** and statistical confirmation via Moran's I spatial autocorrelation.
+**First empirical validation** that region-specific models outperform global baselines on supply chain data, with quantified **+12.74% MAE improvement** (regional) and **+16.85% MAE improvement** (ensemble) over the global XGBoost baseline.
 
 ### 2️⃣ Regional SHAP Heatmaps
 **Novel visualization** revealing how feature importance varies geographically—demonstrating that weather risk dominates in South America but is negligible in Western Europe.
 
 ### 3️⃣ Integrated Multi-Risk Architecture
-**First unified framework** aggregating fraud, cancellation, and late delivery into a single Composite Risk Index—moving beyond siloed risk prediction.
+**First unified framework** aggregating fraud (AUC = 0.5335), cancellation (AUC = 0.5050), and late delivery (Global F1 = 0.6697, AUC = 0.7461) into a single Composite Risk Index—moving beyond siloed risk prediction.
 
 ### 4️⃣ Causal Supply Chain Policy Engine
-**First application** of DoWhy DAGs and Propensity Score Matching to supply chain optimization, providing **causally grounded** ATE estimates (e.g., 33.4% late delivery reduction from shipping upgrades).
+**First application** of DoWhy DAGs and Propensity Score Matching to supply chain optimization, providing **causally grounded** ATE estimates: shipping upgrade (Standard → First Class) reduces late delivery risk by **~34.6 percentage points** (ATE = −0.3463); high-discount strategy shows minimal fraud effect (ATE = −0.0169).
 
 ### 5️⃣ Cost-Sensitive Supply Chain Optimization
-**Financial translation** of ML probabilities into dollar-valued metrics with asymmetric penalty costs, achieving **18.3% reduction** in expected loss.
+**Financial translation** of ML probabilities into dollar-valued metrics with asymmetric penalty costs — FN cost $43.41/order vs. FP cost $5.00/order — with optimal decision threshold tuned to 0.10.
 
 ### 6️⃣ Dynamic Resilience Framework
-**Real-time monitoring** of geographic cluster stability with stress testing and drift detection—preventing catastrophic model degradation in production.
+**Real-time monitoring** of geographic cluster stability: 16 of 23 regions detected as drifting, 7 with worsening late-rate trends, and 3 resilience tiers (Stable / Vulnerable / Fragile) assigned.
 
 ### 7️⃣ End-to-End Deployable MLOps Pipeline
-**First packaged system** integrating all seven phases into a single orchestrated, production-ready pipeline with automated artifact persistence and interactive dashboards.
+**First packaged system** integrating all seven phases into a single orchestrated, production-ready pipeline processing **120,000 rows** in ~61 minutes with automated artifact persistence and interactive dashboards.
 
 ---
 
@@ -541,51 +550,80 @@ Raw DataCo Dataset (180,519 orders)
 
 | Metric | Value | Interpretation |
 |--------|-------|----------------|
-| **Optimal K** | 6 clusters | Selected via elbow method & silhouette analysis |
-| **Silhouette Score** | 0.61 | Good cluster cohesion |
-| **Moran's I** | 0.42 (p < 0.01) | **Statistically significant** spatial autocorrelation |
+| **Optimal K (K-Means)** | 3 clusters | Selected via silhouette analysis |
+| **K-Means Silhouette Score** | 0.1682 | Davies-Bouldin: 2.1272 |
+| **Best DBSCAN** | eps=0.3, 12 clusters | Silhouette = 0.7726 |
+| **Hierarchical Clusters** | 4 groups | Across 23 macro-regions |
+| **Dataset Size (pipeline)** | 120,000 rows | Sample mode from 180,519 total |
 
-**Cluster Characteristics**:
+**K-Means Cluster Profiles**:
 
-| Cluster | Region | Key Traits |
-|---------|--------|------------|
-| **0** | Caribbean & Central America | High late delivery rates, short distances |
-| **1** | Western Europe | Low late delivery, high volume |
-| **2** | North America | Dominant volume, mixed performance |
-| **3** | Southeast Asia | High cross-border frequency, elevated fraud |
-| **4** | South America | Highest weather risk scores |
-| **5** | Sub-Saharan Africa & Middle East | Lowest density, longest distances |
+| Cluster | Avg Sales | Late Delivery Risk | Avg Shipping Days | Avg Distance (KM) | Count |
+|---------|-----------|--------------------|-------------------|--------------------|-------|
+| **0** | $203.02 | 0.550 | 3.476 days | 3,251 km | 27,368 |
+| **1** | $204.17 | 0.547 | 3.513 days | 2,289 km | 46,085 |
+| **2** | $204.19 | 0.552 | 3.508 days | 1,265 km | 46,547 |
+
+**Hierarchical Cluster Groups**:
+- **Cluster 0**: Central Africa, East Africa, Eastern Asia, Oceania, South Asia, Southeast Asia
+- **Cluster 1**: Caribbean, Central America, Central Asia, East of USA, Eastern Europe, North Africa, South America, South of USA, Southern Africa, US Center, West Africa, West Asia, West of USA
+- **Cluster 2**: Northern Europe, Southern Europe, Western Europe
+- **Cluster 3**: Canada
 
 ### 🎯 Forecasting Performance
 
-**Region-Specific vs. Global Baseline**:
+**Global vs. Regional vs. Ensemble Comparison**:
 
-| Model | MAE | RMSE | R² | Improvement |
-|-------|-----|------|-----|------------|
-| **Global XGBoost Baseline** | 0.1820 | 0.2410 | 0.7830 | — |
-| **Cluster 0** (Caribbean) | 0.1689 | 0.2241 | 0.8102 | **-7.2% MAE** |
-| **Cluster 1** (W. Europe) | 0.1743 | 0.2305 | 0.7994 | -4.2% MAE |
-| **Cluster 2** (N. America) | 0.1751 | 0.2318 | 0.7971 | -3.8% MAE |
-| **Cluster 3** (SE Asia) | 0.1712 | 0.2267 | 0.8049 | -5.9% MAE |
-| **Cluster 4** (S. America) | 0.1734 | 0.2295 | 0.8004 | -4.7% MAE |
-| **Cluster 5** (Africa/ME) | 0.1748 | 0.2311 | 0.7983 | -4.0% MAE |
-| **Average Regional** | 0.1729 | 0.2289 | 0.8017 | **-4.5% MAE** ✅ |
+| Model | MAE | RMSE | R² | vs. Global |
+|-------|-----|------|----|------------|
+| **Global XGBoost** | 2,177.32 | 3,381.78 | 0.6310 | — |
+| **Regional Avg (22 models)** | 1,899.90 | 2,540.86 | −0.0610 | **+12.74% MAE** ✅ |
+| **Ensemble** | 1,810.37 | 3,067.76 | 0.6963 | **+16.85% MAE** ✅ |
 
-**Ensemble Performance** (50k sample):
-- **Ensemble MAE**: 205.28
-- **Global MAE**: 224.98
-- **Improvement**: **8.75%**
+**Selected Regional Model Results**:
+
+| Region | MAE | RMSE | R² |
+|--------|-----|------|----|
+| South America | 2,144.95 | 2,818.84 | 0.5164 |
+| Southern Africa | 699.33 | 1,020.76 | 0.3486 |
+| US Center | 1,503.87 | 1,916.22 | 0.1882 |
+| South Asia | 1,411.00 | 1,815.65 | 0.1248 |
+| Central Africa | 1,048.98 | 1,357.42 | 0.1200 |
+| Western Europe | 4,366.77 | 7,674.45 | 0.0893 |
+| Canada | 619.26 | 827.15 | −0.1497 |
+
+**LSTM Training Results** (35,756 parameters):
+
+| Epoch | Train MAE | Val MAE | Val Loss |
+|-------|-----------|---------|----------|
+| 1 | 0.0675 | 0.0834 | 0.0093 |
+| 3 | 0.0463 | 0.0738 | 0.0068 |
+| **5** | **0.0357** | **0.0578** | **0.0051** |
 
 ### 🎯 Late Delivery Classification Performance
 
 | Model | F1 Score | AUC-ROC | Precision | Recall |
 |-------|----------|---------|-----------|--------|
-| **Global Classifier** | 0.6558 | 0.7009 | — | — |
-| **Best Regional** (South Asia) | **0.8148** | **0.84** | — | — |
-| **Worst Regional** (US Center) | 0.5405 | 0.68 | — | — |
-| **Regional Average** | 0.6732 | 0.6846 | — | — |
+| **Global Classifier (RF)** | 0.6697 | 0.7461 | 0.8175 | 0.5672 |
+| **Best Regional** (Canada) | **0.8000** | **0.8956** | 0.8846 | 0.7302 |
+| **Worst Regional** (Oceania) | 0.6563 | 0.7426 | 0.8040 | 0.5545 |
+| **Regional Average (23 models)** | 0.7023 | 0.7883 | — | — |
 
-**Key Finding**: Regional classifiers achieve **AUC scores 0.87-0.91** vs. global 0.83 (from paper)
+**Selected Regional Classifier Results**:
+
+| Region | Precision | Recall | F1 | AUC |
+|--------|-----------|--------|----|-----|
+| Canada | 0.8846 | 0.7302 | 0.8000 | 0.8956 |
+| Central Africa | 0.8293 | 0.7612 | 0.7938 | 0.8418 |
+| Central Asia | 0.8378 | 0.7381 | 0.7848 | 0.8754 |
+| South Asia | 0.8455 | 0.6392 | 0.7280 | 0.8044 |
+| Eastern Europe | 0.7800 | 0.6747 | 0.7236 | 0.8042 |
+| Caribbean | 0.8294 | 0.6079 | 0.7016 | 0.7730 |
+| Western Europe | 0.8321 | 0.5959 | 0.6944 | 0.7711 |
+| Oceania | 0.8040 | 0.5545 | 0.6563 | 0.7426 |
+
+**High-Risk Regions (>50% late delivery rate)**:
+Central Africa (59%), South of USA (56%), South Asia (56%), Western Europe (56%), US Center (56%), East Africa (56%), Eastern Europe (56%), East of USA (56%), Southeast Asia (55%), and 13 more regions all above 50%.
 
 ### 🎯 SHAP Explainability Insights
 
@@ -607,39 +645,51 @@ Raw DataCo Dataset (180,519 orders)
 
 | Risk Component | Metric | Performance |
 |----------------|--------|-------------|
-| **Fraud Detection** | 5-Fold CV AUC | 0.4851 ± 0.0401 |
-| **Cancellation Prediction** | ROC-AUC | 0.5143 |
-| **Late Delivery** | ROC-AUC | 0.70 (global), 0.84 (best regional) |
-| **Composite Risk Index** | Coverage | 8.3% orders >70 (intervention threshold) |
+| **Fraud Detection** | 5-Fold CV AUC | 0.5335 ± 0.0060 |
+| **Fraud Detection** | Dataset fraud rate | 2.22% of 120,000 orders |
+| **Cancellation Prediction** | ROC-AUC | 0.5050 |
+| **Late Delivery (Global)** | ROC-AUC / F1 | 0.7461 / 0.6697 |
+| **Late Delivery (Best: Canada)** | ROC-AUC / F1 | 0.8956 / 0.8000 |
+| **Late Delivery (Regional Avg)** | ROC-AUC / F1 | 0.7883 / 0.7023 |
 
-**Regional Risk Patterns**:
-- **Highest Risk Regions**: South Asia, South of USA, Southern Europe
-- **Critical/High Tier**: 8.3% of total orders
+**Regional Risk Tier Distribution** (sample):
+
+| Region | Low | Medium | High | Critical |
+|--------|-----|--------|------|----------|
+| Western Europe | 54 | 11,138 | 6,366 | 525 |
+| Central America | 39 | 11,832 | 6,593 | 398 |
+| West of USA | 27 | 3,016 | 2,066 | 293 |
+| LATAM South America | 23 | 6,210 | 3,588 | 89 |
+| Canada | 63 | 358 | 194 | 19 |
 
 ### 🎯 Causal Inference Results
 
-| Analysis | Treatment | Outcome | ATE | Interpretation |
-|----------|-----------|---------|-----|----------------|
-| **Shipping Upgrade** | Standard → First Class | Late Delivery Risk | **-0.3336** | **33.4% reduction** in late deliveries |
-| **Discount Strategy** | Discount >20% | Fraud Probability | -0.0196 | Minimal effect on fraud |
+| Analysis | Treatment | Outcome | ATE (PSM) | ATE (Linear Reg) | Interpretation |
+|----------|-----------|---------|-----------|-------------------|----------------|
+| **Shipping Upgrade** | Standard → First Class | Late Delivery Risk | **−0.3463** | **−0.3464** | **~34.6 pp reduction** in late deliveries |
+| **Discount Strategy** | High Discount | Fraud Probability | −0.0169 | — | Minimal effect on fraud |
 
 **Robustness**:
-- Linear regression estimator confirms ATE = -0.3390 (consistent)
-- Placebo treatment refutation: PASSED
-- Data subset sensitivity: PASSED
+- PSM and linear regression estimators yield near-identical ATEs (−0.3463 vs −0.3464), confirming result stability
+- Causal DAGs constructed with backdoor and IV estimands; frontdoor path not found in this dataset
 
 ### 🎯 Financial Optimization Results
 
-| Optimization | Baseline | Optimized | Improvement |
-|--------------|----------|-----------|-------------|
-| **Cost-Sensitive Threshold** | Default 0.5 | Optimized | **-18.3% expected loss** |
-| **False Negative Cost** | $50/order | — | High-stakes errors prioritized |
-| **False Positive Cost** | $10/order | — | Low-stakes errors tolerated |
+| Optimization | Value |
+|--------------|-------|
+| **False Negative Cost** | $43.41/order (mean benefit at risk) |
+| **False Positive Cost** | $5.00/order (expediting overhead) |
+| **Optimal Decision Threshold** | 0.10 (vs. default 0.5) |
 
-**ESG Results**:
-- **Africa**: $29,737 total ESG cost (329 orders)
-- **Europe**: 0.067 profit-per-carbon ratio (best)
-- **LATAM**: $94,022 total ESG-adjusted cost (highest)
+**ESG-Adjusted Profitability by Market**:
+
+| Market | Total Profit | Total ESG Cost | ESG-Adj. Profit | Avg Carbon/Order (km) | Profit/Carbon |
+|--------|-------------|----------------|-----------------|----------------------|---------------|
+| Europe | $771,625 | $1,707,797 | −$936,172 | 1,022 | 0.0505 (best) |
+| LATAM | $738,610 | $2,327,664 | −$1,589,054 | 1,358 | 0.0340 |
+| Pacific Asia | $563,105 | $1,730,303 | −$1,167,199 | 1,264 | 0.0374 |
+| USCA | $376,208 | $881,239 | −$505,031 | 1,024 | 0.0488 |
+| Africa | $158,284 | $675,694 | −$517,409 | 1,754 (highest) | 0.0285 |
 
 ### 🎯 Resilience & Drift Results
 
@@ -1073,6 +1123,19 @@ Found a bug? Please open an issue on our [GitHub Issues](https://github.com/your
 
 ---
 
+## 📄 License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+**Summary**:
+- ✅ Commercial use allowed
+- ✅ Modification allowed
+- ✅ Distribution allowed
+- ✅ Private use allowed
+- ⚠️ Liability limitations apply
+- ⚠️ Warranty disclaimer applies
+
+---
 
 ## 🙏 Acknowledgments
 
